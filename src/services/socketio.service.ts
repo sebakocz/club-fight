@@ -34,6 +34,21 @@ class SocketioService {
       enemyStore.$reset();
       allyStore.$reset();
     });
+
+    // handle combat
+    this.socket.on("damage", (data) => {
+      console.log(data);
+      const { damage, defender } = data;
+      if (defender.id === this.socket.id) {
+        allyStore.health -= damage;
+      } else {
+        enemyStore.health -= damage;
+      }
+
+      if (defender.health <= 0) {
+        // game over
+      }
+    });
   }
 
   disconnect() {
