@@ -1,15 +1,18 @@
 <template>
   <div
-    class="h-screen flex flex-col items-center p-1 justify-between md:max-w-[500px] md:mx-auto"
+    class="h-screen flex flex-col items-center p-1 justify-between sm:max-w-[500px] sm:mx-auto"
   >
-    <div v-if="enemyStore.found" class="w-full flex flex-col gap-3">
-      <HealthBar :health="enemyStore.health" />
+    <div v-if="gameStore.enemy.found" class="w-full flex flex-col gap-3">
+      <HealthBar :health="gameStore.enemy.health" />
       <div class="flex justify-around">
         <ItemDisplay
           :label="item.name"
           :is-ally="false"
-          v-for="item in enemyStore.items"
+          v-for="item in gameStore.enemy.items"
           :key="item.name + 'enemy'"
+          :progress-percentage="item.progressPercentage"
+          :is-preparing="item.isPreparing"
+          :is-running="item.isRunning"
         />
       </div>
     </div>
@@ -17,28 +20,33 @@
     <div class="w-full flex flex-col gap-3">
       <div class="flex justify-around">
         <ItemDisplay
-          :label="item.name"
-          :is-ally="true"
-          v-for="item in allyStore.items"
+          v-for="item in gameStore.ally.items"
           :key="item.name + 'ally'"
+          :label="item.name"
+          :progress-percentage="item.progressPercentage"
+          :is-preparing="item.isPreparing"
+          :is-running="item.isRunning"
+          :class="{
+            'outline-none outline-2 outline-main-500':
+              item === gameStore.selectedItem,
+            'sm:cursor-pointer': true,
+          }"
           @click="onItemClick(item.name)"
         />
       </div>
-      <HealthBar :health="allyStore.health" />
+      <HealthBar :health="gameStore.ally.health" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useEnemyStore } from "@/stores/enemy";
 import HealthBar from "@/components/HealthBar.vue";
-import { useAllyStore } from "@/stores/ally";
 import ItemDisplay from "@/components/ItemDisplay.vue";
+import { useGameStore } from "@/stores/game";
 
-const allyStore = useAllyStore();
-const enemyStore = useEnemyStore();
+const gameStore = useGameStore();
 
 const onItemClick = (label: string) => {
-  allyStore.setActiveItem(label);
+  gameStore.selectItem(label);
 };
 </script>

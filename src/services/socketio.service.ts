@@ -1,6 +1,5 @@
 import { io, Socket } from "socket.io-client";
-import { useEnemyStore } from "@/stores/enemy";
-import { useAllyStore } from "@/stores/ally";
+import { useGameStore } from "@/stores/game";
 
 class SocketioService {
   socket: Socket;
@@ -9,44 +8,39 @@ class SocketioService {
   setupSocketConnection() {
     this.socket = io("http://localhost:3000");
 
-    const enemyStore = useEnemyStore();
-    const allyStore = useAllyStore();
+    const gameStore = useGameStore();
 
     this.socket.on("connection", () => {
-      allyStore.id = this.socket.id;
+      gameStore.ally.id = this.socket.id;
       const randomNames = ["John Doe", "Jane Doe", "John Smith", "Jane Smith"];
-      allyStore.name =
+      gameStore.ally.name =
         randomNames[Math.floor(Math.random() * randomNames.length)];
 
       this.socket.emit("join", {
         id: this.socket.id,
-        name: allyStore.name,
+        name: gameStore.ally.name,
       });
     });
 
     this.socket.on("start", (players) => {
       // start the game
       const enemy = players.find((player: any) => player.id !== this.socket.id);
-      enemyStore.setEnemy(enemy);
+      gameStore.enemy.id = enemy.id;
+      gameStore.enemy.name = enemy.name;
+      gameStore.enemy.found = true;
     });
 
     this.socket.on("end", () => {
-      enemyStore.$reset();
-      allyStore.$reset();
+      gameStore.$reset();
     });
 
-    // handle combat
-    this.socket.on("damage", (data) => {
-      console.log(data);
-      const { damage, defender } = data;
-      if (defender.id === this.socket.id) {
-        allyStore.health -= damage;
-      } else {
-        enemyStore.health -= damage;
-      }
-
-      if (defender.health <= 0) {
-        // game over
+    // handle item effects coming from opponent
+    this.socket.on("itemUsed", (data) => {
+      const item = gameStore.enemy.items.find(
+        (item) => item.name === data.item.name
+      );
+      if (item) {
+        gameStore.useItem(item, gameStore.enemy, gameStore.ally);
       }
     });
   }

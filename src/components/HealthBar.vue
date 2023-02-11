@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { PLAYER_STATS } from "@/stores/player.constants";
+import { PLAYER_STATS } from "@/utils/player";
 
 const props = defineProps({
   health: {
