@@ -27,7 +27,7 @@
           :is-preparing="item.isPreparing"
           :is-running="item.isRunning"
           :class="{
-            'outline-none outline-2 outline-main-500':
+            'outline-none outline-4 outline-secondary-500':
               item === gameStore.selectedItem,
             'sm:cursor-pointer': true,
           }"
