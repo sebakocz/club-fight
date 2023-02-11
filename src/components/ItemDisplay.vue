@@ -38,6 +38,6 @@ const props = defineProps({
 });
 
 const icon = computed(() => {
-  return new URL(`../assets/icons/${props.label}.png`, import.meta.url).href;
+  return new URL(`../assets/icons/${props.label}.svg`, import.meta.url).href;
 });
 </script>
