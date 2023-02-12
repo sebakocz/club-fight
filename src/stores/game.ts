@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { type Player, PLAYER_STATS } from "@/utils/player";
 import type { Item } from "@/utils/item";
 import SocketioService from "@/services/socketio.service";
+import router from "@/router";
 
 const steps = 100;
 
@@ -10,6 +11,7 @@ export const useGameStore = defineStore("game", () => {
   const ally = ref({ ...structuredClone(PLAYER_STATS) });
   const enemy = ref({ ...structuredClone(PLAYER_STATS), found: false });
   const selectedItem = ref<Item | undefined>(undefined);
+  const gamePaused = ref(true);
 
   const useSelectedItem = () => {
     if (selectedItem.value) {
@@ -46,9 +48,6 @@ export const useGameStore = defineStore("game", () => {
     attacker: Player,
     defender: Player
   ): Promise<void> => {
-    // fix: small delay to prevent only every second item to be used by opponent
-    // await new Promise((resolve) => setTimeout(resolve, 100));
-
     return new Promise((resolve) => {
       item.isPreparing = true;
       item.progressPercentage = 0;
@@ -78,6 +77,13 @@ export const useGameStore = defineStore("game", () => {
             0,
             defender.health - item.effect.data.damage
           );
+
+          if (defender.health <= 0) {
+            gamePaused.value = true;
+            setTimeout(() => {
+              resetGame();
+            }, 1000);
+          }
         }
       } else if (item.effect.event === "block") {
         attacker.isBlocking = true;
@@ -109,11 +115,21 @@ export const useGameStore = defineStore("game", () => {
     });
   };
 
+  const resetGame = () => {
+    ally.value = { ...structuredClone(PLAYER_STATS) };
+    enemy.value = { ...structuredClone(PLAYER_STATS), found: false };
+    selectedItem.value = undefined;
+    gamePaused.value = true;
+    router.push("/");
+  };
+
   return {
     ally,
     enemy,
     selectItem,
     selectedItem,
     useItem,
+    gamePaused,
+    resetGame,
   };
 });

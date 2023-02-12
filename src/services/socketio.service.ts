@@ -31,7 +31,7 @@ class SocketioService {
     });
 
     this.socket.on("end", () => {
-      gameStore.$reset();
+      gameStore.resetGame();
     });
 
     // handle item effects coming from opponent

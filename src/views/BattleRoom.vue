@@ -27,7 +27,12 @@
         />
       </div>
     </div>
-    <p v-else class="p-10">Searching for a worthy opponent...</p>
+    <h2 v-else class="mt-20 p-10 text-2xl text-center">
+      Searching for a worthy opponent...
+    </h2>
+
+    <StartCountdown v-if="gameStore.gamePaused && gameStore.enemy.found" />
+
     <div class="w-full flex flex-col gap-3">
       <div class="relative w-full">
         <ItemAnimation
@@ -52,7 +57,8 @@
             'outline-none outline-4 outline-secondary-500':
               item === gameStore.selectedItem,
             'sm:cursor-pointer': true,
-            'pointer-events-none': !gameStore.enemy.found,
+            'pointer-events-none':
+              !gameStore.enemy.found || gameStore.gamePaused,
           }"
           @click="onItemClick(item.name)"
         />
@@ -67,6 +73,17 @@ import HealthBar from "@/components/HealthBar.vue";
 import ItemDisplay from "@/components/ItemDisplay.vue";
 import { useGameStore } from "@/stores/game";
 import ItemAnimation from "@/components/ItemAnimation.vue";
+import { onBeforeUnmount, onMounted } from "vue";
+import SocketioService from "@/services/socketio.service";
+import StartCountdown from "@/components/StartCountdown.vue";
+
+onMounted(() => {
+  SocketioService.setupSocketConnection();
+});
+
+onBeforeUnmount(() => {
+  SocketioService.disconnect();
+});
 
 const gameStore = useGameStore();
 
