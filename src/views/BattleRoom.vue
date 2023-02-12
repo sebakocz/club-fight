@@ -45,7 +45,9 @@
           class="bottom-3"
         />
       </div>
-      <div class="flex justify-around">
+      <div class="flex justify-around relative">
+        <TutorialPopup />
+
         <ItemDisplay
           v-for="item in gameStore.ally.items"
           :key="item.name + 'ally'"
@@ -76,6 +78,7 @@ import ItemAnimation from "@/components/ItemAnimation.vue";
 import { onBeforeUnmount, onMounted } from "vue";
 import SocketioService from "@/services/socketio.service";
 import StartCountdown from "@/components/StartCountdown.vue";
+import TutorialPopup from "@/components/TutorialPopup.vue";
 
 onMounted(() => {
   SocketioService.setupSocketConnection();
