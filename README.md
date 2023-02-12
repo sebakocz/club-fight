@@ -1,46 +1,46 @@
-# client
+# :clubs::crossed_swords: Club Fight
 
-This template should help get you started developing with Vue 3 in Vite.
+Proof of concept for a fast-paced multiplayer browser game optimized for mobile devices. I will build upon this idea if it proves to be enjoyable at its core - its core being a 1vs1 battler mini game, taking no longer than a minute.
 
-## Recommended IDE Setup
+## :video_game: Gameplay
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+![clubfight_gameplay](https://user-images.githubusercontent.com/44639352/218338984-3e0eafab-c96f-45c1-bdaf-f1018a6fc151.gif)
 
-## Type Support for `.vue` Imports in TS
+## :yin_yang: Core Design
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+If this is all that is needed to have fun, this has a great premise.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+* 1vs1, players can click on items
+* Just a few items to choose from, currently 3
+* Items have a preperation cooldown as well as a cooldown after they triggered
+* Due to this anticipation game, players can skillfully use items that will counter others
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## :star: Features
 
-## Customize configuration
+Currently only enough features to test the idea of the core design
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+* 'Battle Now!' button leading to an instantanous 1vs1 room
+* Club: heavy & powerful
+* Shield: protects from incoming attacks
+* Dagger: fast & versatile
 
-## Project Setup
+## :bulb: Future Additions
 
-```sh
-npm install
-```
+This section is mainly to keep my head dreaming.
 
-### Compile and Hot-Reload for Development
+* item variety
+* NPCs - monsters to fight and loot
+* a map to explore
+* a leaderboard system to track the best players
 
-```sh
-npm run dev
-```
+---
 
-### Type-Check, Compile and Minify for Production
+## :wrench: Stack
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+* Vue.js ~ *frontend*
+    * Pinia ~ *state management*
+* Node.js ~ *server-side JavaScript*
+    * Express ~ *serve static content, define routes, handle HTTP requests and responses*
+    * [Socket.io](http://Socket.io) ~ *two-way server communication with client*
+* Nginx ~ *reverse proxy, forwards the requests to the appropriate server*
+* Digital Ocean Droplet ~ *hosting*
