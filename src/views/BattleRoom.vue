@@ -46,7 +46,7 @@
         />
       </div>
       <div class="flex justify-around relative">
-        <TutorialPopup />
+        <TutorialPopup v-if="gameStore.gamePaused" />
 
         <ItemDisplay
           v-for="item in gameStore.ally.items"
