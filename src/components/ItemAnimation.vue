@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 import { computed, type PropType, ref, watch } from "vue";
 import type { ItemEvent } from "@/utils/item";
+import { useItem } from "@/composables/item";
 
 const props = defineProps({
   label: {
@@ -33,8 +34,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-import { useItem } from "@/composables/item";
 
 const { icon } = useItem(props.label);
 
