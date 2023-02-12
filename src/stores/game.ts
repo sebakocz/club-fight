@@ -74,7 +74,10 @@ export const useGameStore = defineStore("game", () => {
     return new Promise((resolve) => {
       if (item.effect.event === "attack") {
         if (!defender.isBlocking) {
-          defender.health -= item.effect.data.damage;
+          defender.health = Math.max(
+            0,
+            defender.health - item.effect.data.damage
+          );
         }
       } else if (item.effect.event === "block") {
         attacker.isBlocking = true;

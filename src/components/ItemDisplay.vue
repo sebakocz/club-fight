@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { useItem } from "@/composables/item";
 
 const props = defineProps({
   label: {
@@ -36,7 +36,5 @@ const props = defineProps({
   },
 });
 
-const icon = computed(() => {
-  return new URL(`../assets/icons/${props.label}.svg`, import.meta.url).href;
-});
+const { icon } = useItem(props.label);
 </script>

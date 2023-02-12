@@ -15,9 +15,31 @@
           :is-running="item.isRunning"
         />
       </div>
+      <div class="relative">
+        <ItemAnimation
+          v-for="item in gameStore.enemy.items"
+          :is-enemy="true"
+          :label="item.name"
+          :is-running="item.isRunning"
+          :item-event="item.effect.event"
+          :key="item.name + 'enemyAnimation'"
+          class="absolute top-3"
+        />
+      </div>
     </div>
     <p v-else class="p-10">Searching for a worthy opponent...</p>
     <div class="w-full flex flex-col gap-3">
+      <div class="relative">
+        <ItemAnimation
+          v-for="item in gameStore.ally.items"
+          :is-enemy="false"
+          :label="item.name"
+          :is-running="item.isRunning"
+          :item-event="item.effect.event"
+          :key="item.name + 'allyAnimation'"
+          class="absolute bottom-3"
+        />
+      </div>
       <div class="flex justify-around">
         <ItemDisplay
           v-for="item in gameStore.ally.items"
@@ -43,6 +65,7 @@
 import HealthBar from "@/components/HealthBar.vue";
 import ItemDisplay from "@/components/ItemDisplay.vue";
 import { useGameStore } from "@/stores/game";
+import ItemAnimation from "@/components/ItemAnimation.vue";
 
 const gameStore = useGameStore();
 
