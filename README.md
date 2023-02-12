@@ -37,6 +37,8 @@ This section is mainly to keep my head dreaming.
 
 ## :wrench: Stack
 
+server-side code can be found [here](https://github.com/sebakocz/club-fight-server)
+
 * Vue.js ~ *frontend*
     * Pinia ~ *state management*
 * Node.js ~ *server-side JavaScript*
