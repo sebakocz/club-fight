@@ -13,6 +13,9 @@ export const useGameStore = defineStore("game", () => {
 
   const useSelectedItem = () => {
     if (selectedItem.value) {
+      if (selectedItem.value.isPreparing || selectedItem.value.isRunning) {
+        return;
+      }
       SocketioService.socket.emit("useItem", {
         item: selectedItem.value,
       });
@@ -44,12 +47,9 @@ export const useGameStore = defineStore("game", () => {
     defender: Player
   ): Promise<void> => {
     // fix: small delay to prevent only every second item to be used by opponent
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    // await new Promise((resolve) => setTimeout(resolve, 100));
 
     return new Promise((resolve) => {
-      if (item.isPreparing || item.isRunning) {
-        return;
-      }
       item.isPreparing = true;
       item.progressPercentage = 0;
       const preparationInterval = setInterval(() => {

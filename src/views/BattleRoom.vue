@@ -52,6 +52,7 @@
             'outline-none outline-4 outline-secondary-500':
               item === gameStore.selectedItem,
             'sm:cursor-pointer': true,
+            'pointer-events-none': !gameStore.enemy.found,
           }"
           @click="onItemClick(item.name)"
         />
