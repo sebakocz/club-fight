@@ -1,7 +1,5 @@
 <template>
-  <div class="absolute inset-0">
-    <router-view />
-  </div>
+  <router-view class="h-full" />
 </template>
 
 <style>
@@ -10,5 +8,6 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  height: 100%;
 }
 </style>

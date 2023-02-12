@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#app {
+  /* workaround for mobile url-bar cutting off content */
+  /* https://developer.chrome.com/blog/url-bar-resizing/ */
+  height: 100%;
+}

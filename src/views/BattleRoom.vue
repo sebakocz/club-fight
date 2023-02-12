@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-screen flex flex-col items-center p-1 justify-between sm:max-w-[500px] sm:mx-auto"
+    class="flex flex-col items-center p-1 justify-between sm:max-w-[500px] sm:mx-auto"
   >
     <div v-if="gameStore.enemy.found" class="w-full flex flex-col gap-3">
       <HealthBar :health="gameStore.enemy.health" />
