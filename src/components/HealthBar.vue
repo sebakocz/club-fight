@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-8 bg-main-300 p-1 rounded"
+    class="w-full h-[5vh] bg-main-300 p-[.8vh] rounded"
     :class="{ blink: healthChanged }"
   >
     <div

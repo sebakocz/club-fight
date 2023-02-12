@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative w-24 h-24 sm:w-32 sm:h-32 bg-main-200 rounded overflow-hidden"
+    class="relative w-[30vw] h-[30vw] sm:w-32 sm:h-32 bg-main-200 rounded overflow-hidden"
   >
     <img :src="icon" class="w-full h-full" alt="icon" />
     <div

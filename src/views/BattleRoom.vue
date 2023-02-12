@@ -23,13 +23,13 @@
           :is-running="item.isRunning"
           :item-event="item.effect.event"
           :key="item.name + 'enemyAnimation'"
-          class="absolute top-3"
+          class="top-3"
         />
       </div>
     </div>
     <p v-else class="p-10">Searching for a worthy opponent...</p>
     <div class="w-full flex flex-col gap-3">
-      <div class="relative">
+      <div class="relative w-full">
         <ItemAnimation
           v-for="item in gameStore.ally.items"
           :is-enemy="false"
@@ -37,7 +37,7 @@
           :is-running="item.isRunning"
           :item-event="item.effect.event"
           :key="item.name + 'allyAnimation'"
-          class="absolute bottom-3"
+          class="bottom-3"
         />
       </div>
       <div class="flex justify-around">

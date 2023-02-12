@@ -1,5 +1,9 @@
 <template>
-  <div :class="`w-32 h-32 mx-auto left-0 right-0 ${isEnemy ? 'flipped' : ''}`">
+  <div
+    :class="`w-32 h-32 mx-auto left-0 right-0 absolute ${
+      isEnemy ? 'flipped' : ''
+    }`"
+  >
     <Transition :name="animationType">
       <img
         :src="icon"

@@ -7,7 +7,7 @@ import SocketioService from "@/services/socketio.service";
 const steps = 100;
 
 export const useGameStore = defineStore("game", () => {
-  const ally = ref(structuredClone(PLAYER_STATS));
+  const ally = ref({ ...structuredClone(PLAYER_STATS) });
   const enemy = ref({ ...structuredClone(PLAYER_STATS), found: false });
   const selectedItem = ref<Item | undefined>(undefined);
 
