@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-[5vh] bg-main-300 p-[.8vh] rounded"
+    class="w-full h-[5vh] bg-secondary-300 p-[.8vh] rounded"
     :class="{ blink: healthChanged }"
   >
     <div
@@ -45,7 +45,7 @@ watch(width, () => {
     background-color: #ea7777;
   }
   100% {
-    background-color: rgb(140 181 252);
+    background-color: rgb(252 216 155);
   }
 }
 </style>
