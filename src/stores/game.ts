@@ -116,11 +116,11 @@ export const useGameStore = defineStore("game", () => {
   };
 
   const resetGame = () => {
+    router.push("/");
     ally.value = { ...structuredClone(PLAYER_STATS) };
     enemy.value = { ...structuredClone(PLAYER_STATS), found: false };
     selectedItem.value = undefined;
     gamePaused.value = true;
-    router.push("/");
   };
 
   return {

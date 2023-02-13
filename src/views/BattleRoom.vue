@@ -31,7 +31,7 @@
       Searching for a worthy opponent...
     </h2>
 
-    <StartCountdown v-if="gameStore.gamePaused && gameStore.enemy.found" />
+    <StartCountdown v-if="gameStore.enemy.found" />
 
     <div class="w-full flex flex-col gap-3">
       <div class="relative w-full">
