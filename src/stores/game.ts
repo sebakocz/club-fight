@@ -9,39 +9,43 @@ import { ITEM_LIST } from "@/utils/item";
 const steps = 100;
 
 export const useGameStore = defineStore("game", () => {
-  const ally = ref({ ...PLAYER_STATS, items: structuredClone([...ITEM_LIST]) });
+  const ally = ref({
+    ...PLAYER_STATS,
+    items: ITEM_LIST.map((item) => ({ ...item })),
+  });
   const enemy = ref({
     ...PLAYER_STATS,
-    items: structuredClone([...ITEM_LIST]),
+    items: ITEM_LIST.map((item) => ({ ...item })),
     found: false,
   });
-  const selectedItem = ref<Item | undefined>(undefined);
+  const selectedItem = ref("");
   const gamePaused = ref(true);
 
   const useSelectedItem = () => {
-    if (selectedItem.value) {
-      if (selectedItem.value.isPreparing || selectedItem.value.isRunning) {
+    const item = ally.value.items.find(
+      (item) => item.name === selectedItem.value
+    );
+    if (item) {
+      if (item.isPreparing || item.isRunning) {
         return;
       }
       SocketioService.socket.emit("useItem", {
-        item: selectedItem.value,
+        item: item,
       });
-      useItem(selectedItem.value, ally.value, enemy.value).then(() => {
+      useItem(item, ally.value, enemy.value).then(() => {
         useSelectedItem();
       });
     }
   };
 
-  const selectItem = (itemName: string) => {
+  const selectItem = (name: string) => {
     if (selectedItem.value) {
-      if (selectedItem.value.name === itemName) {
-        selectedItem.value = undefined;
+      if (selectedItem.value === name) {
+        selectedItem.value = "";
         return;
       }
     }
-    selectedItem.value = ally.value.items.find(
-      (item) => item.name === itemName
-    );
+    selectedItem.value = name;
     if (ally.value.items.some((item) => item.isRunning || item.isPreparing)) {
       return;
     }
@@ -124,14 +128,14 @@ export const useGameStore = defineStore("game", () => {
     router.push("/");
     ally.value = {
       ...structuredClone(PLAYER_STATS),
-      items: structuredClone([...ITEM_LIST]),
+      items: ITEM_LIST.map((item) => ({ ...item })),
     };
     enemy.value = {
       ...structuredClone(PLAYER_STATS),
-      items: structuredClone([...ITEM_LIST]),
+      items: ITEM_LIST.map((item) => ({ ...item })),
       found: false,
     };
-    selectedItem.value = undefined;
+    selectedItem.value = "";
     gamePaused.value = true;
   };
 

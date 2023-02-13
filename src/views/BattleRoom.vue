@@ -57,7 +57,7 @@
           :is-running="item.isRunning"
           :class="{
             'outline-none outline-4 outline-secondary-500':
-              item === gameStore.selectedItem,
+              item.name === gameStore.selectedItem,
             'sm:cursor-pointer': true,
             'pointer-events-none':
               !gameStore.enemy.found || gameStore.gamePaused,
@@ -90,7 +90,7 @@ onBeforeUnmount(() => {
 
 const gameStore = useGameStore();
 
-const onItemClick = (label: string) => {
-  gameStore.selectItem(label);
+const onItemClick = (name: string) => {
+  gameStore.selectItem(name);
 };
 </script>
