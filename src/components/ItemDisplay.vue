@@ -16,6 +16,7 @@
 
 <script lang="ts" setup>
 import { useItem } from "@/composables/item";
+import { watch } from "vue";
 
 const props = defineProps({
   label: {
@@ -37,4 +38,13 @@ const props = defineProps({
 });
 
 const { icon } = useItem(props.label);
+
+watch(
+  () => props.isRunning,
+  (isRunning) => {
+    if (isRunning) {
+      console.log("isRunning");
+    }
+  }
+);
 </script>

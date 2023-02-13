@@ -58,8 +58,6 @@ watch(
   () => props.isRunning,
   (isRunning) => {
     if (isRunning) {
-      console.log("runCounter.value: ", runCounter.value);
-      console.log(animationType.value);
       runCounter.value++;
     }
   }

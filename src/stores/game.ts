@@ -4,12 +4,17 @@ import { type Player, PLAYER_STATS } from "@/utils/player";
 import type { Item } from "@/utils/item";
 import SocketioService from "@/services/socketio.service";
 import router from "@/router";
+import { ITEM_LIST } from "@/utils/item";
 
 const steps = 100;
 
 export const useGameStore = defineStore("game", () => {
-  const ally = ref({ ...structuredClone(PLAYER_STATS) });
-  const enemy = ref({ ...structuredClone(PLAYER_STATS), found: false });
+  const ally = ref({ ...PLAYER_STATS, items: structuredClone([...ITEM_LIST]) });
+  const enemy = ref({
+    ...PLAYER_STATS,
+    items: structuredClone([...ITEM_LIST]),
+    found: false,
+  });
   const selectedItem = ref<Item | undefined>(undefined);
   const gamePaused = ref(true);
 
@@ -117,8 +122,15 @@ export const useGameStore = defineStore("game", () => {
 
   const resetGame = () => {
     router.push("/");
-    ally.value = { ...structuredClone(PLAYER_STATS) };
-    enemy.value = { ...structuredClone(PLAYER_STATS), found: false };
+    ally.value = {
+      ...structuredClone(PLAYER_STATS),
+      items: structuredClone([...ITEM_LIST]),
+    };
+    enemy.value = {
+      ...structuredClone(PLAYER_STATS),
+      items: structuredClone([...ITEM_LIST]),
+      found: false,
+    };
     selectedItem.value = undefined;
     gamePaused.value = true;
   };
