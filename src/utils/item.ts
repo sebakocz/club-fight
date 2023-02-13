@@ -1,30 +1,42 @@
 export type ItemEvent = "attack" | "block";
 export type ItemEffect = { event: ItemEvent; data: any };
 
-export class Item {
+export type Item = {
   name: string;
   preperationCooldown: number;
   cooldown: number;
   effect: ItemEffect;
-  progressPercentage: number = 0; // 0-100, helper for progress bar
-  isPreparing: boolean = false;
-  isRunning: boolean = false;
+  progressPercentage: number; // 0-100, helper for progress bar
+  isPreparing: boolean;
+  isRunning: boolean;
+};
 
-  constructor(
-    name: string,
-    preperationCooldown: number,
-    cooldown: number,
-    effect: ItemEffect
-  ) {
-    this.name = name;
-    this.preperationCooldown = preperationCooldown;
-    this.cooldown = cooldown;
-    this.effect = effect;
-  }
-}
+export const ITEM_BASE = {
+  progressPercentage: 0,
+  isPreparing: false,
+  isRunning: false,
+};
 
-export const ITEM_LIST = [
-  new Item("club", 1000, 5000, { event: "attack", data: { damage: 10 } }),
-  new Item("shield", 600, 1400, { event: "block", data: {} }),
-  new Item("dagger", 500, 1000, { event: "attack", data: { damage: 5 } }),
+export const ITEM_LIST: Item[] = [
+  {
+    name: "club",
+    preperationCooldown: 5000,
+    cooldown: 1000,
+    effect: { event: "attack", data: { damage: 25 } },
+    ...ITEM_BASE,
+  },
+  {
+    name: "shield",
+    preperationCooldown: 600,
+    cooldown: 1400,
+    effect: { event: "block", data: {} },
+    ...ITEM_BASE,
+  },
+  {
+    name: "dagger",
+    preperationCooldown: 500,
+    cooldown: 1000,
+    effect: { event: "attack", data: { damage: 5 } },
+    ...ITEM_BASE,
+  },
 ];
