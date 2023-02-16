@@ -31,7 +31,7 @@
       Searching for a worthy opponent...
     </h2>
 
-    <StartCountdown v-if="gameStore.enemy.found" />
+    <StartCountdown v-if="gameStore.enemy.found && gameStore.isOnline" />
 
     <div class="w-full flex flex-col gap-3">
       <div class="relative w-full">
@@ -75,18 +75,8 @@ import HealthBar from "@/components/HealthBar.vue";
 import ItemDisplay from "@/components/ItemDisplay.vue";
 import { useGameStore } from "@/stores/game";
 import ItemAnimation from "@/components/ItemAnimation.vue";
-import { onBeforeUnmount, onMounted } from "vue";
-import SocketioService from "@/services/socketio.service";
 import StartCountdown from "@/components/StartCountdown.vue";
 import TutorialPopup from "@/components/TutorialPopup.vue";
-
-onMounted(() => {
-  SocketioService.setupSocketConnection();
-});
-
-onBeforeUnmount(() => {
-  SocketioService.disconnect();
-});
 
 const gameStore = useGameStore();
 

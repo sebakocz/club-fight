@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import BattleRoom from "@/views/BattleRoom.vue";
 import HomePage from "@/views/HomePage.vue";
+import MultiplayerPage from "@/views/MultiplayerPage.vue";
+import SingleplayerPage from "@/views/SingleplayerPage.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -13,7 +14,12 @@ const router = createRouter({
     {
       path: "/battle",
       name: "battle",
-      component: BattleRoom,
+      component: MultiplayerPage,
+    },
+    {
+      path: "/train",
+      name: "train",
+      component: SingleplayerPage,
     },
   ],
 });

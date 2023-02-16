@@ -25,9 +25,8 @@ class SocketioService {
     this.socket.on("start", (players) => {
       // start the game
       const enemy = players.find((player: any) => player.id !== this.socket.id);
-      gameStore.enemy.id = enemy.id;
-      gameStore.enemy.name = enemy.name;
-      gameStore.enemy.found = true;
+
+      gameStore.createEnemy(enemy.id, enemy.name, true);
     });
 
     this.socket.on("end", () => {

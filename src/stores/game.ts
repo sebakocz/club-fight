@@ -20,6 +20,7 @@ export const useGameStore = defineStore("game", () => {
   });
   const selectedItem = ref("");
   const gamePaused = ref(true);
+  const isOnline = ref(false);
 
   const useSelectedItem = () => {
     const item = ally.value.items.find(
@@ -29,9 +30,11 @@ export const useGameStore = defineStore("game", () => {
       if (item.isPreparing || item.isRunning) {
         return;
       }
-      SocketioService.socket.emit("useItem", {
-        item: item,
-      });
+      if (isOnline.value) {
+        SocketioService.socket.emit("useItem", {
+          item: item,
+        });
+      }
       useItem(item, ally.value, enemy.value).then(() => {
         useSelectedItem();
       });
@@ -139,6 +142,17 @@ export const useGameStore = defineStore("game", () => {
     gamePaused.value = true;
   };
 
+  const createEnemy = (
+    id: string,
+    name: string,
+    onlineMode: boolean = false
+  ) => {
+    enemy.value.id = id;
+    enemy.value.name = name;
+    enemy.value.found = true;
+    isOnline.value = onlineMode;
+  };
+
   return {
     ally,
     enemy,
@@ -147,5 +161,7 @@ export const useGameStore = defineStore("game", () => {
     useItem,
     gamePaused,
     resetGame,
+    createEnemy,
+    isOnline,
   };
 });
