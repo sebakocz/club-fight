@@ -6,8 +6,6 @@ import SocketioService from "@/services/socketio.service";
 import router from "@/router";
 import { ITEM_LIST } from "@/utils/item";
 
-const steps = 100;
-
 export const useGameStore = defineStore("game", () => {
   const ally = ref({
     ...PLAYER_STATS,
@@ -62,18 +60,12 @@ export const useGameStore = defineStore("game", () => {
   ): Promise<void> => {
     return new Promise((resolve) => {
       item.isPreparing = true;
-      item.progressPercentage = 0;
-      const preparationInterval = setInterval(() => {
-        item.progressPercentage += 100 / steps;
-        if (item.progressPercentage >= 100) {
-          clearInterval(preparationInterval);
-          item.progressPercentage = 100;
-          item.isPreparing = false;
-          applyEffect(item, attacker, defender).then(() => {
-            resolve();
-          });
-        }
-      }, item.preperationCooldown / steps);
+      setTimeout(() => {
+        item.isPreparing = false;
+        applyEffect(item, attacker, defender).then(() => {
+          resolve();
+        });
+      }, item.preparationCooldown);
     });
   };
 
@@ -101,7 +93,7 @@ export const useGameStore = defineStore("game", () => {
         attacker.isBlocking = true;
         setTimeout(() => {
           attacker.isBlocking = false;
-        }, item.cooldown);
+        }, item.executionCooldown);
       } else {
         console.error("Unknown effect event", item.effect.event);
       }
@@ -115,15 +107,10 @@ export const useGameStore = defineStore("game", () => {
   const startCooldown = (item: Item): Promise<void> => {
     return new Promise((resolve) => {
       item.isRunning = true;
-      const cooldownInterval = setInterval(() => {
-        item.progressPercentage -= 100 / steps;
-        if (item.progressPercentage <= 0) {
-          clearInterval(cooldownInterval);
-          item.progressPercentage = 0;
-          item.isRunning = false;
-          resolve();
-        }
-      }, item.cooldown / steps);
+      setTimeout(() => {
+        item.isRunning = false;
+        resolve();
+      }, item.executionCooldown);
     });
   };
 

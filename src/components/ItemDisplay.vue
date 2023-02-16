@@ -5,36 +5,63 @@
     <img :src="icon" class="w-full h-full" alt="icon" />
     <div
       :class="{
-        'bg-secondary-400': isPreparing,
-        'bg-gray-200': isRunning,
-        'absolute top-0 left-0 w-full h-full rounded opacity-70 origin-bottom transition-{duration: 0.1s, timing-function: linear} transition-colors': true,
+        'bg-secondary-400 preparing': isPreparing,
+        'bg-gray-200 running': isRunning,
       }"
-      :style="{ transform: `scaleY(${progressPercentage / 100})` }"
+      class="absolute scale-y-0 top-0 left-0 w-full h-full rounded opacity-70 origin-bottom transition-colors duration-200"
+      :style="cssVars"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useItem } from "@/composables/item";
+import { computed } from "vue";
 
 const props = defineProps({
   label: {
     type: String,
     required: true,
   },
-  progressPercentage: {
-    type: Number,
-    required: true,
-  },
   isPreparing: {
     type: Boolean,
+    required: true,
+  },
+  preparationCooldown: {
+    type: Number,
     required: true,
   },
   isRunning: {
     type: Boolean,
     required: true,
   },
+  executionCooldown: {
+    type: Number,
+    required: true,
+  },
 });
 
 const { icon } = useItem(props.label);
+
+const cssVars = computed(() => {
+  return {
+    "--preparation-cooldown": `${props.preparationCooldown / 1000}s`,
+    "--execution-cooldown": `${props.executionCooldown / 1000}s`,
+  };
+});
 </script>
+
+<style lang="sass">
+.preparing
+  animation: scale-y var(--preparation-cooldown) linear
+
+.running
+  animation: scale-y var(--execution-cooldown) linear reverse
+  animation-delay: var(--preparation-cooldown)
+
+@keyframes scale-y
+  0%
+    transform: scaleY(0)
+  100%
+    transform: scaleY(1)
+</style>

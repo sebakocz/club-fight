@@ -10,9 +10,10 @@
           :is-ally="false"
           v-for="item in gameStore.enemy.items"
           :key="item.name + 'enemy'"
-          :progress-percentage="item.progressPercentage"
           :is-preparing="item.isPreparing"
+          :preparation-cooldown="item.preparationCooldown"
           :is-running="item.isRunning"
+          :execution-cooldown="item.executionCooldown"
         />
       </div>
       <div class="relative">
@@ -52,9 +53,10 @@
           v-for="item in gameStore.ally.items"
           :key="item.name + 'ally'"
           :label="item.name"
-          :progress-percentage="item.progressPercentage"
           :is-preparing="item.isPreparing"
+          :preparation-cooldown="item.preparationCooldown"
           :is-running="item.isRunning"
+          :execution-cooldown="item.executionCooldown"
           :class="{
             'outline-none outline-4 outline-secondary-500':
               item.name === gameStore.selectedItem,
